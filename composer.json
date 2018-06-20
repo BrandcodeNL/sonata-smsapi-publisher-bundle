@@ -1,7 +1,7 @@
 {
-    "name": "brandcodenl/sonata-mailchimp-publisher-bundle",
+    "name": "brandcodenl/sonata-smsapi-publisher-bundle",
     "type": "symfony-bundle",
-    "description": "Publish entities from sonata admin list view to Mailchimp campaigns",
+    "description": "Publish entities from sonata admin list view to smsapi.com campaigns",
     "keywords": ["sonata", "publish", "mailchimp"],
     "homepage": "https://aveq.nl",
     "license": "MIT",
