@@ -1,51 +1,35 @@
-# parameters:
-#     brandcode_nl_sonata_mailchimp_publisher.list_provider_class: BrandcodeNL\SonataMailchimpPublisherBundle\Provider\ListProvider 
-#     brandcode_nl_sonata_mailchimp_publisher.settings_provider_class: BrandcodeNL\SonataMailchimpPublisherBundle\Provider\SettingsProvider
-#     brandcode_nl_sonata_mailchimp_publisher.twig_formatter_class: BrandcodeNL\SonataMailchimpPublisherBundle\Formatter\TwigFormatter
-     
-# services:
-#   brandcode_nl_sonata_mailchimp_publisher.mailchimp_master:
-#     class: DrewM\MailChimp\MailChimp
-#     arguments: ['%brandcode_nl_sonata_mailchimp_publisher.api_key%']
-#     public: false 
-
-#   brandcode_nl_sonata_mailchimp_publisher.list_provider:
-#     class: '%brandcode_nl_sonata_mailchimp_publisher.list_provider_class%'  
-#     public: false 
-
-#   brandcode_nl_sonata_mailchimp_publisher.twig_formatter:
-#     class: '%brandcode_nl_sonata_mailchimp_publisher.twig_formatter_class%'  
-#     arguments:
-#       - '@twig'
-#       - '%brandcode_nl_sonata_mailchimp_publisher.lists%'
-#     public: false 
-
-#   brandcode_nl_sonata_mailchimp_publisher.settings_provider:
-#     class: '%brandcode_nl_sonata_mailchimp_publisher.settings_provider_class%'  
-#     arguments:
-#       - '%brandcode_nl_sonata_mailchimp_publisher.lists%'
-#     public: false 
-
-  smsapi_client:
-      class: SMSApi\Client
-      arguments: 'sms@aveqimedia.nl'
-      calls:
-        - method: setPasswordHash
-          arguments:
-              - '424f58b524cd9239818877766bbf98f1'
-  
+services:
+    smsapi_client:
+        class: SMSApi\Client
+        arguments: 
+            - 'sms@aveqimedia.nl'        
+        calls:
+            - method: setPasswordHash
+              arguments: ['%brandcode_nl_sonata_smsapi_publisher.api_key%']
+        public: false
+        
     smsapi_api:
         class: SMSApi\Api\SmsFactory
-        arguments: 'sms@aveqimedia.nl'
+        arguments:
+            - 'sms@aveqimedia.nl'
         calls:
-        - method: setClient
-            arguments:
+            - method: setClient
+              arguments:
                 - '@smsapi_client'
+        public: false
+    
+    brandcode_nl_sonata_smsapi.phone_number_provider:
+        class: BrandcodeNL\SonataSmsapiPublisherBundle\Provider\PhoneNumberProvider
+
+    brandcode_nl_sonata_smsapi.content_provider:
+        class: BrandcodeNL\SonataSmsapiPublisherBundle\Provider\ContentProvider
 
     brandcode_nl_sonata_smsapi_publisher.channel:
         class: BrandcodeNL\SonataSmsapiPublisherBundle\Channel\SMSChannel            
         arguments: 
             - '@smsapi_api'
+            - '@brandcode_nl_sonata_smsapi.phone_number_provider'
+            - '@brandcode_nl_sonata_smsapi.content_provider'
         tags:
             - { name: sonata_publisher.channel } 
         public: false
