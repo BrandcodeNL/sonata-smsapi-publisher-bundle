@@ -29,6 +29,7 @@ class BrandcodeNLSonataSmsapiPublisherExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);       
        
         $container->setParameter('brandcode_nl_sonata_smsapi_publisher.api_key', isset($config['api_key']) ? $config['api_key'] : null);
+        $container->setParameter('brandcode_nl_sonata_smsapi_publisher.username', isset($config['username']) ? $config['username'] : null);
 
     }
 }

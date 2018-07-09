@@ -2,7 +2,7 @@ services:
     smsapi_client:
         class: SMSApi\Client
         arguments: 
-            - 'sms@aveqimedia.nl'        
+            - '%brandcode_nl_sonata_smsapi_publisher.username%'        
         calls:
             - method: setPasswordHash
               arguments: ['%brandcode_nl_sonata_smsapi_publisher.api_key%']
@@ -11,7 +11,7 @@ services:
     smsapi_api:
         class: SMSApi\Api\SmsFactory
         arguments:
-            - 'sms@aveqimedia.nl'
+            - '%brandcode_nl_sonata_smsapi_publisher.username%'
         calls:
             - method: setClient
               arguments:

@@ -47,8 +47,7 @@ class SMSChannel implements ChannelInterface
                 $actionSend = $this->smsApi->actionSend();            
                 $actionSend->setTo(implode(",",$phoneList->getPhoneNumbers()));
                 $actionSend->setText($this->contentProvider->getText($object, $phoneList));
-                $actionSend->setSender($phoneList->getSender());
-                $actionSend->setSender("Info");                
+                $actionSend->setSender($phoneList->getSender());     
                 $response = $actionSend->execute();
                
                 foreach ($response->getList() as $status) {
